@@ -24,6 +24,7 @@ import java.util.UUID;
 import static com.example.pgCryptoExample.TestContainerUtil.initializeConnectionUrl;
 import static com.example.pgCryptoExample.TestContainerUtil.startContainer;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
 @Testcontainers
@@ -49,17 +50,13 @@ class CustomerDetailsServiceDBIntegrationTest {
     }
 
 
+    @Transactional
     @Test
-    public void shouldSaveCustomerCibilDetailsInEncryptedFormat() {
+    public void shouldSaveCustomerCibilDetailsInEncryptedFormatAndReturnUnEncryptedFormat() {
         CustomerDetails customerDetails = new CustomerDetails(UUID.randomUUID(), "700", "Sachin Tendulkar", true);
         CustomerDetails customerDetailsPersisted = this.customerDetailsService.saveCustomerDetails(customerDetails);
 
-        assertThat(customerDetailsPersisted.getCibilScore(), not("700"));
-    }
-
-    @Test
-    public void shouldReturnCustomerCibilDetailsInNonEncryptedFormat() {
-
+        assertThat(customerDetailsPersisted.getCibilScore(), is("700"));
     }
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

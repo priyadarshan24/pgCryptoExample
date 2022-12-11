@@ -36,4 +36,16 @@ public class CustomerDetailsCustomRepository  {
         CustomerDetails save = customerDetailsRepository.save(customerDetails);
         return save;
     }
+
+    public CustomerDetails getCustomerDetails(UUID id   ) {
+        Session curSession = entityManager.unwrap(Session.class);
+        curSession.doWork(connection -> {
+            connection.createStatement().execute(
+                    String.format("SET LOCAL var.private_key = '%s'", this.privateKey));
+            connection.createStatement().execute(
+                    String.format("SET LOCAL var.private_key_password = '%s'", this.privateKeyPassword));
+        });
+
+        return customerDetailsRepository.findById(id).get();
+    }
 }

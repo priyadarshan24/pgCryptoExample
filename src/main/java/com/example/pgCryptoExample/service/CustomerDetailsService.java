@@ -20,7 +20,8 @@ public class CustomerDetailsService {
         return this.customerDetailsRepository.saveCustomerDetails(customerDetails);
     }
 
+    @Transactional
     public CustomerDetails getCustomerDetails(UUID id) {
-        return null;
+        return this.customerDetailsRepository.getCustomerDetails(id);
     }
 }

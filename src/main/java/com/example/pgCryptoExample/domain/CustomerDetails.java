@@ -25,7 +25,8 @@ public class CustomerDetails implements Serializable
 
     @Setter(AccessLevel.NONE)
     @ColumnTransformer(
-            write = "public.pgp_pub_encrypt(?,public.dearmor(current_setting('var.public_key')))")
+            write = "public.pgp_pub_encrypt(?,public.dearmor(current_setting('var.public_key')))",
+            read = "pgp_pub_decrypt(cibil_score, dearmor(current_setting('var.private_key')),current_setting('var.private_key_password'))")
     @Column(name = "cibil_score", columnDefinition = "bytea")
     private String cibilScore;
 
