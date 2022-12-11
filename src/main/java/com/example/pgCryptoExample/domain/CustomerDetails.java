@@ -1,15 +1,14 @@
 package com.example.pgCryptoExample.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @Getter
 @AllArgsConstructor
@@ -19,13 +18,14 @@ import java.util.UUID;
 public class CustomerDetails implements Serializable
 {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @Setter(AccessLevel.NONE)
     @ColumnTransformer(
-            write = "pgp_pub_encrypt(?,dearmor(current_setting('var.public_key')))",
-            read = "pgp_pub_decrypt(cibil_score, dearmor(current_setting('var.private_key')),current_setting('var.private_key_password'))")
+            write = "public.pgp_pub_encrypt(?,public.dearmor(current_setting('var.public_key')))")
     @Column(name = "cibil_score", columnDefinition = "bytea")
     private String cibilScore;
 
