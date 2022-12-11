@@ -1,4 +1,4 @@
-package com.example.pgCryptoExample.pgCryptoExample;
+package com.example.pgCryptoExample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

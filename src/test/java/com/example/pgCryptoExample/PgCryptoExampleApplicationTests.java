@@ -1,4 +1,4 @@
-package com.example.pgCryptoExample.pgCryptoExample;
+package com.example.pgCryptoExample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
